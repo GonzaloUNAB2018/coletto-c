@@ -1,0 +1,53 @@
+<!--
+  Generated template for the HomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-content>
+
+  <div #map id="map"></div>
+  <ion-fab class="menuBtn" left>
+    <button ion-button color="secondary" round (click)="toProfilePage()">
+      <div>{{nickname}}</div>
+    </button>
+  </ion-fab>
+
+  <ion-fab class="moreBtn" end>
+    <button ion-button icon-only clear (click)="presentPopover($event)">
+      <ion-icon name="more" color="secondary"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab class="btn2" bottom center>
+    <button ion-button block round [color]="buttonColorTwo" (click)="selectTwo()">
+      <b>2</b>
+    </button>
+  </ion-fab>
+
+  <ion-fab class="btn1" bottom left>
+    <button ion-button block round [color]="buttonColorOne" (click)="selectOne()">
+      <b>1</b>
+    </button>
+  </ion-fab>
+
+  <ion-fab class="btn0" bottom left>
+    <button ion-button block round [color]="buttonColorCero" (click)="selectCero()">
+      <b>0</b>
+    </button>
+  </ion-fab>
+
+  <ion-fab class="btn3" bottom right>
+    <button ion-button block round [color]="buttonColorThree" (click)="selectThree()">
+      <b>3</b>
+    </button>
+  </ion-fab>
+
+  <ion-fab class="btn4" bottom right>
+    <button ion-button block round [color]="buttonColorFour" (click)="selectFour()">
+      <b>4</b>
+    </button>
+  </ion-fab>
+  
+</ion-content>

@@ -1,0 +1,48 @@
+<ion-list class="popover-page">
+  <div padding>
+    <p align="center">Para ver opciones de conducción, deslice la barra verde hacia la izquierda.</p>
+  </div>    
+  <div align="center">
+    <button ion-button color="primary" round (click)="selectWayOne()" *ngIf="way; else dissway">
+      <p>Plan - Cerro</p>
+    </button>
+    <ng-template #dissway>
+      <button ion-button color="secondary" round (click)="selectWayCero()">
+        <p>Cerro - PLan</p>
+      </button>
+    </ng-template>
+    <br>
+    <div *ngIf="!way">Servicio Actual Plan - Cerro</div>
+    <div *ngIf="way">Servicio Actual Cerro - Plan</div>
+  </div>
+  <ion-item-sliding>
+    <ion-item class="itemBg">
+      <h2 align="center">Desliza a la izquierda</h2>
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button color="greenState" *ngIf="!navigated; else stoped" (click)="initNav(); connecting()">
+        <ion-icon ios="ios-power" md="md-power"></ion-icon>
+        On Service
+      </button>
+      <ng-template #stoped>
+        <button ion-button color="yellowState" (click)="stopNav()">
+          <ion-icon ios="ios-power" md="md-power"></ion-icon>
+          Stand By
+        </button>
+      </ng-template>
+      <button ion-button color="redState" (click)="disconnecting(); stopNav()" *ngIf="connected; else disconnected">
+        <ion-icon ios="ios-wifi" md="md-wifi"></ion-icon>
+        Desconectar
+      </button>
+      <ng-template #disconnected><button ion-button color="blueState" (click)="connecting()">
+        <ion-icon ios="ios-wifi" md="md-wifi"></ion-icon>
+        Conectar-App
+      </button></ng-template>
+    </ion-item-options>
+  </ion-item-sliding>
+  <div align="center" padding>
+    <button ion-button color="secondary" round (click)="logout()">
+      <p>Cerrar sesión</p>
+    </button>
+  </div>
+</ion-list>

@@ -1,0 +1,72 @@
+page-home {
+    #map {
+        height: 100%;
+      }
+
+    .menuBtn{
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+
+    .moreBtn{
+        padding-top: 10px;
+        padding-right: 3px;
+        ion-icon{
+            font-size: 40px;
+            border: 10px;
+            border-block-start: 10px;
+            border-inline-start: 10px;
+            border-block-start-color: black;
+        }
+    }
+
+    .stateBtn{
+        padding-top: 100px;
+        padding-right: 10px;
+    }
+
+    .stateBtnList{
+        padding-top: 100px;
+    }
+
+    button{
+        padding: 15px 32px;
+    }
+
+    .btn0{
+        padding-left: 3px;
+        b{
+            font-size: 35px;
+        }
+    }
+
+    .btn1{
+        padding-left: 21vw;
+        b{
+            font-size: 35px;
+        }
+    }
+
+    .btn2{
+        //padding-left: 27vw;
+        b{
+            font-size: 35px;
+        }
+        
+ 
+    }
+
+    .btn3{
+        padding-right: 21vw;
+        b{
+            font-size: 35px;
+        }
+    }
+
+    .btn4{
+        padding-right: 3px;
+        b{
+            font-size: 35px;
+        }
+    }
+}

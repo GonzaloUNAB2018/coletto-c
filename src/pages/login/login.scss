@@ -1,0 +1,39 @@
+page-login {
+
+  h1{
+    font-size: 35px;
+    color: color($colors, secondary);
+  }
+
+  p{
+    font-size: 20px;
+    color: color($colors, secondary)
+  }
+
+  .text-input{
+    color: color($colors, secondary);
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .login-content{
+    background-color: color($colors, primary)
+  }
+
+  .item-inner{
+    background-color: color($colors, primary)
+
+  }
+
+  .submit-btn {
+    background: color($colors, secondary);
+    border-radius: 30px !important;
+    border: 1px solid color($colors, primary);
+  }
+
+  .register-btn {
+    color: rgb(0, 176, 79);
+    font-size: 1em;
+  }
+
+}
