@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { User } from '../../models/user';
 import { HomePage } from '../home/home';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { NicknamePage } from '../nikname/nickname';
+import { InscriptionPage } from '../inscription/inscription';
 
 @IonicPage()
 @Component({
@@ -12,7 +12,6 @@ import { NicknamePage } from '../nikname/nickname';
 })
 export class LoginPage {
   user = {} as User;
-  name : any = null;
 
   constructor(
     public navCtrl: NavController, 
@@ -26,48 +25,29 @@ export class LoginPage {
   }
 
   login(){
-      this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
-      .then(() => {
-        this.setRootPage();
-        //this.navCtrl.setRoot(HomePage)
-      },(err) => {
-        let alert = this.alertCtrl.create({
-          title: 'Email Incorrecto',
-          subTitle: 'Credenciales Password e Email no coinciden, por favor intente nuevamente.',
-          buttons: ['OK']
-        });
-        alert.present();})
-        let loader = this.loadingCtrl.create({
-          content: "Por favor espere...",
-          duration: 3000
-        });
-        loader.present();
+    this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password)
+    .then(() => {
+      this.navCtrl.setRoot(HomePage);
+    })
+    .catch(e=>{
+      console.log(e);
+      if(e.code === 'auth/user-not-found'){
+        alert('Usuario no encontrado, registrese o verifique las credenciales ingresadas.')
+      }
+    });
   }
 
   goToSignup(){
-    //this.navCtrl.push(VerifyRegPage);
-  }
-
-  back(){
-    this.navCtrl.pop();
+    this.navCtrl.push(InscriptionPage);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  }
-
-  /*ionViewCanLeave(){
-    this.setRootPage()
-  }*/
-
-  setRootPage(){
-    this.name = this.afAuth.auth.currentUser.displayName;
-    if(this.name == null){
-      this.navCtrl.setRoot(NicknamePage);
-    }else{
-      this.navCtrl.setRoot(HomePage);
-      //console.log(this.userId)
-    }
+    this.afAuth.auth.onAuthStateChanged(user=>{
+      if(user){
+        this.navCtrl.setRoot(HomePage);
+      }
+    })
   }
 
 }

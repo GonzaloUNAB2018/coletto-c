@@ -5,4 +5,15 @@ page-profile {
         text-align: center;
     }
 
+    .profilePhoto{
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        //image-resolution: 50%;
+    }
+
+    .toolbar-background.toolbar-background-md{
+        background-color: transparent;
+    }
+
 }

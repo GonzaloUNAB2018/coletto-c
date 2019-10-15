@@ -1,0 +1,46 @@
+<ion-content class="login-content" padding>
+  <ion-navbar>
+
+  </ion-navbar>
+  <div class="login-box">
+    <form  #registerForm="ngForm">
+      <div class="container">
+        <ion-title align="center" padding-top>
+          <img src="./assets/imgs/coletto logo 12 transparente.png" width="100" height="100">
+        </ion-title>
+        <ion-list inset>
+          <ion-item>
+            <ion-label floating>Nombre</ion-label>
+            <ion-input [(ngModel)]="user.name" type="text" name="name" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Apellidos</ion-label>
+            <ion-input [(ngModel)]="user.surname" type="text" name="surname" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>RUN</ion-label>
+            <ion-input [(ngModel)]="user.run" type="text" name="run" maxlength="9" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Teléfono de contacto</ion-label>
+            <ion-input [(ngModel)]="user.phone" type="number" name="phone" required minlength="9"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Correo Electrónico</ion-label>
+          <ion-input [(ngModel)]="user.email" type="email" autocorrect="off" autocapitalize="none" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9._%+-]+\.[a-z]{2,3}$" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Contraseña</ion-label>
+          <ion-input [(ngModel)]="user.password" type="password" name="password" required minlength="6"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Confirme contraseña</ion-label>
+          <ion-input [(ngModel)]="password" type="password" name="password" required minlength="6"></ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+      
+      <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid" (click)="signUp()">Login</button>
+    </form>
+  </div>
+</ion-content>

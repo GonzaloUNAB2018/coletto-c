@@ -4,7 +4,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Device } from '@ionic-native/device';
-import { NicknamePage } from '../nikname/nickname';
 import { ProfilePage } from '../profile/profile';
 import { LoginPage } from '../login/login';
 import { PrimaryPopoverPage } from '../popovers/primary-popover/primary-popover';
@@ -12,6 +11,7 @@ import { ConnectProvider } from '../../providers/connect/connect';
 import { InitNavigateProvider } from '../../providers/init-navigate/init-navigate';
 import { ChangeWayProvider } from '../../providers/change-way/change-way';
 import { User } from '../../models/user';
+import { AngularFireProvider } from '../../providers/angular-fire/angular-fire';
 
 declare var google
 
@@ -27,10 +27,11 @@ export class HomePage {
   markers = [];
   user = {} as User;
   uid = this.afAuth.auth.currentUser.uid;
-  ref = this.afDb.database.ref('Choferes/'+this.uid);
+  ref : any
+  //ref = this.afDb.database.ref('Choferes/'+this.uid);
   chofer = 'assets/imgs/arrow.png'
   myLocation: any;
-  public nickname : any = null;
+  public name : any = null;
   cameraPos: any;
   connected: boolean;
   public buttonColorCero: string;
@@ -47,7 +48,7 @@ export class HomePage {
     public platform: Platform,
     public alertCtrl: AlertController,
     private geolocation: Geolocation,
-    public afDb: AngularFireDatabase,
+    //public afDb: AngularFireDatabase,
     public afAuth: AngularFireAuth,
     public device: Device,
     public popoverCtrl: PopoverController,
@@ -55,37 +56,32 @@ export class HomePage {
     public navigate: InitNavigateProvider,
     public chWay: ChangeWayProvider,
     public toastCtrl: ToastController,
+    private afProvider: AngularFireProvider
     ) {
 
-      this.nickname = this.afAuth.auth.currentUser.displayName;
+  }
 
-      if(this.nickname == null){
-        this.navCtrl.setRoot(NicknamePage);
-      }else{
-        
-      }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad HomePage');
+    //console.log(this.nickname);
+    this.connect.toDiscconect();
+    this.navigate.toStopNavigate();
+    this.chWay.toWayOne();
+    this.initMap();
+    this.ref = this.afProvider.actualiceData(this.uid);
+    this.afProvider.getUserData(this.uid).valueChanges().subscribe(usr=>{
+      let user: any = usr
+      if(user){
+        this.name = user.name;
+      };
+    })
+  };
 
-      
-    platform.ready().then(() => {
-      this.initMap();
+  centerMap(){
+    google.maps.Map(this.mapElement.nativeElement, {
+      zoom: 18.5,
+      center: this.myLocation
     });
-    /*this.ref.on('value', resp => {
-      this.deleteMarkers();
-      snapshotToArray(resp).forEach(data => {
-        if(data.uid !== this.device.uuid) {
-          //let image = 'assets/imgs/green-bike.png';
-          let updatelocation = new google.maps.LatLng(data.latitude,data.longitude);
-          this.addMarker(updatelocation);
-          this.setMapOnAll(this.map);
-        } else {
-          let image = 'assets/imgs/blue-bike.png';
-          let updatelocation = new google.maps.LatLng(data.latitude,data.longitude);
-          this.addMarker(updatelocation,image);
-          this.setMapOnAll(this.map);
-        }
-      });
-    });*/
-    
   }
 
   selectCero(){
@@ -185,14 +181,6 @@ export class HomePage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
-    console.log(this.nickname);
-    this.connect.toDiscconect();
-    this.navigate.toStopNavigate();
-    this.chWay.toWayOne();
-  }
-
   initMap() {
     this.geolocation.getCurrentPosition({ maximumAge: 5000, timeout: 7000, enableHighAccuracy: true }).then((resp) => {
       this.myLocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
@@ -275,7 +263,7 @@ export class HomePage {
   logout(){
     this.afAuth.auth.signOut().then(()=>{
       this.navCtrl.setRoot(LoginPage);
-      console.log('Chofer',this.nickname,'ha cerrado sesión');
+      console.log('Chofer',this.name,'ha cerrado sesión');
     }).catch(error =>{
       console.log('Error de cierre de sesión');
     })

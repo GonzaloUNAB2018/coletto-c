@@ -5,14 +5,16 @@ export class User {
     type:           string;
     name:           string;
     surname:        string;
-    run:            number;
-    runV:           number;
+    run:            string;
     nickname:       string;
-    fone:           number;
+    phone:          number;
+    phoneNumber:    string;
     lineColetto:    string;
     location: {
         lat:        number;
         lng:        number;
+        alt:        number;
+        speed:      number;
     }
     connect:        number;
     onService:      number;

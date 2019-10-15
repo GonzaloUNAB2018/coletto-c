@@ -14,7 +14,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage:any;
+  //rootPage:any;
 
   logged: boolean;
 
@@ -34,20 +34,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-
-      
-    this.afAuth.auth.onAuthStateChanged(user=>{
-      if (user){
-        this.uid = this.afAuth.auth.currentUser.uid;
-        this.logged = true;
-        this.nav.setRoot(HomePage);
-        this.user.sesion = 1;
-        this.afDb.object('Choferes/'+this.uid).update(this.user);
-      }else{
-        this.logged = false;
-        this.nav.setRoot(LoginPage);
-      }
-    })
+      this.nav.setRoot(LoginPage);
     });
   }
 }

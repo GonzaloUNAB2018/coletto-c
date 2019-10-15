@@ -2,12 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 
-/*
-  Generated class for the UserProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class UserProvider {
 
@@ -19,17 +13,21 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
+
+  public createUserDriver(user){
+    this.afDb.object('Choferes/'+user.uid).set(user);
+  }
+
   public getUsersDrivers(){
     return this.afDb.list(`Choferes/`);
-}
+  }
 
   public getUserDriver(id){
     return this.afDb.object(`Choferes/`+id);
-}
+  }
 
-public updateUser(user){
-    this.afDb.database.ref(`Pops/`+user.id).update(user);
-
-}
+  public updateUser(user){
+      this.afDb.database.ref(`Pops/`+user.id).update(user);
+  }
 
 }
