@@ -59,12 +59,11 @@ export class HomePage {
     public toastCtrl: ToastController,
     private afProvider: AngularFireProvider
     ) {
-
+      
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    //console.log(this.nickname);
     this.connect.toDiscconect();
     this.navigate.toStopNavigate();
     this.chWay.toWayOne();
@@ -75,7 +74,7 @@ export class HomePage {
       if(user){
         this.name = user.name;
       };
-    })
+    });
   };
 
   centerMap(){
@@ -183,32 +182,30 @@ export class HomePage {
   }
 
   initMap() {
-    /*this.geolocation.getCurrentPosition({ maximumAge: 5000, timeout: 7000, enableHighAccuracy: true }).then((resp) => {
+    this.geolocation.getCurrentPosition({ maximumAge: 5000, timeout: 7000, enableHighAccuracy: true }).then((resp) => {
       this.myLocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
+      this.getMap(this.myLocation);
     }).catch(error =>{
       const alert = this.alertCtrl.create({
         title: 'Mapa no ha podido ser cargado',
         buttons: ['OK']
       });
       alert.present();
-    });*/
+    });
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
       this.deleteMarkers();
       this.updateGeolocation(this.uid, data.coords.latitude,data.coords.longitude);
       let update = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
-      this.getMap(update);
       let image = 'assets/imgs/arrow.png';
       //let camera = new google.maps.moveCamera(updatelocation);
       this.addMarker(update, image);
       this.setMapOnAll(this.map);
       //console.log(this.map);
-      google.maps.event.addListener(this.marker,'click',function() {
-        var pos = this.map.getZoom();
-        this.map.setZoom(9);
-        this.map.setCenter(this.marker.getPosition());
-        window.setTimeout(function() {this.map.setZoom(pos);},3000);
-      });
+      if(update != this.myLocation){
+        this.myLocation = update;
+        this.map.panTo(this.myLocation);
+      }
       
     });
    
@@ -233,6 +230,8 @@ export class HomePage {
       },
     });
     this.markers.push(this.marker);
+    
+    
   }
   
   setMapOnAll(map) {
